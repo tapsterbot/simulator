@@ -43,7 +43,7 @@ svg {
   visibility: hidden;
 }
 
-.base-circle {
+.arm-circle {
   fill: rgba(225,225,225,0.3);
   stroke: #000;
   stroke-width: 0;
@@ -56,7 +56,7 @@ svg {
   stroke-width: 0; 
 }
 
-.base-arm {
+.upper-arm {
   stroke: rgba(50,50,50,0.7);
   stroke-width: 16;
   stroke-linecap: round;

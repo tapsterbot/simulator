@@ -46,7 +46,7 @@ leftCenterY = 40;
 rightCenterX = 8*6;
 rightCenterY = 40;
 
-baseArmRadius = 8*8;
+upperArmRadius = 8*8;
 forearmRadius = 8*13;
 */
 
@@ -57,24 +57,24 @@ leftCenterY = 40;
 rightCenterX = 8*4;
 rightCenterY = 40;
 
-baseArmRadius = 8*9;
+upperArmRadius = 8*9;
 forearmRadius = 8*13;
 
 
 
 ////////////////////////////////////////////////
-dragBaseArmEvent = function(dx, dy, posx, posy) {
+dragUpperArmEvent = function(dx, dy, posx, posy) {
   // Convert the mouse/touch X and Y so that it's relative to the svg element
   var pt = svg.createSVGPoint();
   pt.x = posx;
   pt.y = posy;
   var transformed = pt.matrixTransform(svg.getScreenCTM().inverse());
 
-  moveBaseArm(this, transformed.x, transformed.y);
+  moveUpperArm(this, transformed.x, transformed.y);
 }
 
 ////////////////////////////////////////////////
-moveBaseArm = function(arm, posx, posy) {
+moveUpperArm = function(arm, posx, posy) {
   var cx = parseInt(arm.attr('cx'));
   var cy = parseInt(arm.attr('cy'));
   var cr = parseInt(arm.attr('cr'));
@@ -90,15 +90,15 @@ moveBaseArm = function(arm, posx, posy) {
     points = intersection(parseInt(arm.attr('x2')),
                           parseInt(arm.attr('y2')),
                           forearmRadius,
-                          parseInt(rightBaseArm.attr('x2')),
-                          parseInt(rightBaseArm.attr('y2')),
+                          parseInt(rightUpperArm.attr('x2')),
+                          parseInt(rightUpperArm.attr('y2')),
                           forearmRadius);
   } else {
     points = intersection(parseInt(arm.attr('x2')),
                           parseInt(arm.attr('y2')),
                           forearmRadius,
-                          parseInt(leftBaseArm.attr('x2')),
-                          parseInt(leftBaseArm.attr('y2')),
+                          parseInt(leftUpperArm.attr('x2')),
+                          parseInt(leftUpperArm.attr('y2')),
                           forearmRadius);
   }
 
@@ -141,13 +141,13 @@ dragForearmEvent = function(dx, dy, posx, posy) {
 moveForearm = function(arm, posx, posy) {
   var side = arm.attr('side');
   if (side == "left") {
-    points = intersection(leftCenterX,leftCenterY,baseArmRadius, posx, posy, forearmRadius);
+    points = intersection(leftCenterX,leftCenterY,upperArmRadius, posx, posy, forearmRadius);
   } else {
-    points = intersection(rightCenterX,rightCenterY,baseArmRadius, posx, posy, forearmRadius);
+    points = intersection(rightCenterX,rightCenterY,upperArmRadius, posx, posy, forearmRadius);
   }
 
-  var baseArmName = arm.attr('linkedTo');
-  var baseArm = window[baseArmName];
+  var upperArmName = arm.attr('linkedTo');
+  var upperArm = window[upperArmName];
 
   if (points[0] == 1) {
     // points are inside the limit
@@ -165,21 +165,21 @@ moveForearm = function(arm, posx, posy) {
       });
     }
 
-    var armAngle = angle360(baseArm.attr('x1').toFloat(),
-                         baseArm.attr('y1').toFloat(),
-                         baseArm.attr('x2').toFloat(),
-                         baseArm.attr('y2').toFloat())
+    var armAngle = angle360(upperArm.attr('x1').toFloat(),
+                         upperArm.attr('y1').toFloat(),
+                         upperArm.attr('x2').toFloat(),
+                         upperArm.attr('y2').toFloat())
 
     if (side == "left") {
       armAngle -= 135;
-      baseArm.attr({"x2": points[1][2],
+      upperArm.attr({"x2": points[1][2],
                     "y2": points[1][3]});
     } else {
       armAngle -= 225;
       if (armAngle <= 0) {
         armAngle = 360 + armAngle;
       }
-      baseArm.attr({"x2": points[1][0],
+      upperArm.attr({"x2": points[1][0],
                     "y2": points[1][1]});
     }
     
@@ -193,61 +193,61 @@ moveForearm = function(arm, posx, posy) {
     var result = limit(posx, posy, cx, cy, cr);
     arm.attr({"x2": result.x, "y2": result.y});
     if (side == "left") {
-      var result = limit(posx, posy, leftCenterX, leftCenterY, baseArmRadius);
+      var result = limit(posx, posy, leftCenterX, leftCenterY, upperArmRadius);
     } else {
-      var result = limit(posx, posy, rightCenterX, rightCenterY, baseArmRadius);
+      var result = limit(posx, posy, rightCenterX, rightCenterY, upperArmRadius);
     }
     arm.attr({"x1": result.x, "y1": result.y});
-    baseArm.attr({"x2": result.x, "y2": result.y});
+    upperArm.attr({"x2": result.x, "y2": result.y});
   }
 
 }
 Simulator = function(){};
-Simulator.prototype.leftBoundaryCirle = paper.circle(leftCenterX, leftCenterY, baseArmRadius+forearmRadius);
+Simulator.prototype.leftBoundaryCirle = paper.circle(leftCenterX, leftCenterY, upperArmRadius+forearmRadius);
 Simulator.prototype.leftBoundaryCirle.attr({ class: "boundary-circle" });
 
-Simulator.prototype.rightBoundaryCirle = paper.circle(rightCenterX, rightCenterY, baseArmRadius+forearmRadius);
+Simulator.prototype.rightBoundaryCirle = paper.circle(rightCenterX, rightCenterY, upperArmRadius+forearmRadius);
 Simulator.prototype.rightBoundaryCirle.attr({ class: "boundary-circle" });
 
 ////////////////////////////////////////////////
-Simulator.prototype.leftBaseCircle = paper.circle(leftCenterX, leftCenterY, baseArmRadius);
-Simulator.prototype.leftBaseCircle.attr({ class: "base-circle" });
+Simulator.prototype.leftUpperArmCircle = paper.circle(leftCenterX, leftCenterY, upperArmRadius);
+Simulator.prototype.leftUpperArmCircle.attr({ class: "arm-circle" });
 
 Simulator.prototype.leftStepper = paper.rect(leftCenterX-20,leftCenterY-20,40,40,5,5);
 Simulator.prototype.leftStepper.attr({ class: "stepper" });
 
 ////////////////////////////////////////////////
-Simulator.prototype.rightBaseCircle = paper.circle(rightCenterX, rightCenterY, baseArmRadius);
-Simulator.prototype.rightBaseCircle.attr({ class: "base-circle" });
+Simulator.prototype.rightUpperArmCircle = paper.circle(rightCenterX, rightCenterY, upperArmRadius);
+Simulator.prototype.rightUpperArmCircle.attr({ class: "arm-circle" });
 
 Simulator.prototype.rightStepper = paper.rect(rightCenterX-20,rightCenterY-20,40,40,5,5)
 Simulator.prototype.rightStepper.attr({ class: "stepper" });
 
 ////////////////////////////////////////////////
-leftBaseArm = paper.line(leftCenterX,
+leftUpperArm = paper.line(leftCenterX,
                          leftCenterY,
                          leftCenterX,
-                         leftCenterY-(baseArmRadius));
-leftBaseArm.attr({
-  class: "base-arm",
+                         leftCenterY-(upperArmRadius));
+leftUpperArm.attr({
+  class: "upper-arm",
   cx: leftCenterX,
   cy: leftCenterY,
-  cr: baseArmRadius,
+  cr: upperArmRadius,
   linkedTo: "leftForearm",
   side: "left"
 });
 
-leftBaseArm.drag(dragBaseArmEvent);
+leftUpperArm.drag(dragUpperArmEvent);
 
 ////////////////////////////////////////////////
 leftForearm = paper.line(leftCenterX,
-                         leftCenterY-baseArmRadius,
+                         leftCenterY-upperArmRadius,
                          leftCenterX+forearmRadius,
-                         leftCenterY-baseArmRadius);
+                         leftCenterY-upperArmRadius);
 leftForearm.attr({
   class: "forearm",
   cr: forearmRadius,
-  linkedTo: "leftBaseArm",
+  linkedTo: "leftUpperArm",
   side: "left"
 });
 
@@ -256,27 +256,27 @@ leftForearm.drag(dragForearmEvent);
 //leftForearm.move = function(){ return this; };
 
 ////////////////////////////////////////////////
-rightBaseArm = paper.line(rightCenterX, rightCenterY, rightCenterX, rightCenterY-baseArmRadius);
-rightBaseArm.attr({
-  class: "base-arm",
+rightUpperArm = paper.line(rightCenterX, rightCenterY, rightCenterX, rightCenterY-upperArmRadius);
+rightUpperArm.attr({
+  class: "upper-arm",
   cx: rightCenterX,
   cy: rightCenterY,
-  cr: baseArmRadius,
+  cr: upperArmRadius,
   linkedTo: "rightForearm",
   side: "right"
 });
 
-rightBaseArm.drag(dragBaseArmEvent);
+rightUpperArm.drag(dragUpperArmEvent);
 
 ////////////////////////////////////////////////
 rightForearm = paper.line(rightCenterX,
-                          rightCenterY-baseArmRadius,
+                          rightCenterY-upperArmRadius,
                           rightCenterX+forearmRadius,
-                          rightCenterY-baseArmRadius);
+                          rightCenterY-upperArmRadius);
 rightForearm.attr({
   class: "forearm",
   cr: forearmRadius,
-  linkedTo: "rightBaseArm",
+  linkedTo: "rightUpperArm",
   side: "right"
 });
 
@@ -311,7 +311,7 @@ dragPointerEvent = function(dx, dy, posx, posy) {
 
   // Subtract 4 from radius to keep the arm slightly bent and prevent a singularity.
   // (Yes, *the* singularity. You've been warned...)
-  var inLeftCircle = (leftDistance <= baseArmRadius + forearmRadius - 4);
+  var inLeftCircle = (leftDistance <= upperArmRadius + forearmRadius - 4);
 
   // Check to see new point is outside the boundary
   var rightDistance = Math.sqrt(Math.pow(rightCenterX - transformed.x, 2) +
@@ -320,7 +320,7 @@ dragPointerEvent = function(dx, dy, posx, posy) {
   // Subtract 4 from radius to keep the arm slightly bent and prevent a singularity.
   // (Yes, *the* singularity. You've been warned...)
   // (And, yes, it's a paradox that there could be two singularities. Best to not think about it...)
-  var inRightCircle = (rightDistance <= baseArmRadius + forearmRadius - 4);
+  var inRightCircle = (rightDistance <= upperArmRadius + forearmRadius - 4);
 
   if (inLeftCircle && inRightCircle) {
     this.attr({"cx": transformed.x, "cy": transformed.y});
@@ -328,9 +328,9 @@ dragPointerEvent = function(dx, dy, posx, posy) {
     moveForearm(rightForearm, transformed.x, transformed.y);
   } else {
     if (this.attr('cx') <= 0) {
-      var result = limit(transformed.x, transformed.y, rightCenterX, rightCenterY, baseArmRadius+forearmRadius-4);
+      var result = limit(transformed.x, transformed.y, rightCenterX, rightCenterY, upperArmRadius+forearmRadius-4);
     } else {
-      var result = limit(transformed.x, transformed.y, leftCenterX, leftCenterY, baseArmRadius+forearmRadius-4);
+      var result = limit(transformed.x, transformed.y, leftCenterX, leftCenterY, upperArmRadius+forearmRadius-4);
     }
     this.attr({"cx": result.x, "cy": result.y});
     moveForearm(leftForearm, result.x, result.y);
@@ -353,15 +353,15 @@ moveForearm(rightForearm, 0, pointer.attr('cy'))
 
 ////////////////////////////////////////////////
 Simulator.prototype.showCircles = function() {
-  this.leftBaseCircle.attr({visibility:"visible"});
-  this.rightBaseCircle.attr({visibility:"visible"});
+  this.leftUpperArmCircle.attr({visibility:"visible"});
+  this.rightUpperArmCircle.attr({visibility:"visible"});
   this.leftBoundaryCirle.attr({visibility:"visible"});
   this.rightBoundaryCirle.attr({visibility:"visible"});
 };
 
 Simulator.prototype.hideCircles = function() {
-  this.leftBaseCircle.attr({visibility:"hidden"});
-  this.rightBaseCircle.attr({visibility:"hidden"});
+  this.leftUpperArmCircle.attr({visibility:"hidden"});
+  this.rightUpperArmCircle.attr({visibility:"hidden"});
   this.leftBoundaryCirle.attr({visibility:"hidden"});
   this.rightBoundaryCirle.attr({visibility:"hidden"});
 };
