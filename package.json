@@ -2,26 +2,29 @@
   "name": "simulator",
   "version": "0.0.1",
   "description": "Simulator",
-  "author":[{
-       "name":"Jason Huggins",
-       "email":"jrhuggins@gmail.com"
-    }],
-  "repository":{
-    "type":"git",
-    "url":"https://github.com/tapsterbot/simulator.git"
-  },    
-  "homepage": "https://github.com/tapsterbot/simulator", 
+  "author": [
+    {
+      "name": "Jason Huggins",
+      "email": "jrhuggins@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tapsterbot/simulator.git"
+  },
+  "homepage": "https://github.com/tapsterbot/simulator",
   "bugs": {
     "url": "https://github.com/tapsterbot/simulator/issues"
-  },    
+  },
   "main": "server.js",
   "dependencies": {
     "express": "*",
-    "socket.io": "*",
-    "johnny-five": "*"
+    "johnny-five": "*",
+    "minimist": "^1.2.0",
+    "socket.io": "*"
   },
   "scripts": {
     "start": "node server.js"
-  },  
+  },
   "license": "MIT"
 }
