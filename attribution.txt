@@ -1,0 +1,27 @@
+////////////////////////////////////////////////
+"How to constrain movement within the area of a circle"
+http://stackoverflow.com/a/8528999
+By http://stackoverflow.com/users/524555/duopixel
+
+
+////////////////////////////////////////////////
+"Change in mouse position when viewbox is added"
+http://stackoverflow.com/a/11936865
+By http://stackoverflow.com/users/109374/erik-dahlstr%C3%B6m
+References:
+http://www.codedread.com/blog/archives/2005/12/21/how-to-enable-dragging-in-svg/
+Demo: http://www.codedread.com/dragtest.svg
+
+
+////////////////////////////////////////////////
+"SVG how to get the mouse position on the internal matrix"
+http://stackoverflow.com/q/21852543
+By http://stackoverflow.com/users/1310814/serverbloke
+
+
+////////////////////////////////////////////////
+"How to scale SVG image to fill browser window?"
+http://stackoverflow.com/a/5644436
+http://phrogz.net/svg/svg_in_xhtml5.xhtml
+By http://stackoverflow.com/users/405017/phrogz
+
