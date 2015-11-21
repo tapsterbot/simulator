@@ -2,9 +2,17 @@ var express = require('express');
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
+var argv = require('minimist')(process.argv.slice(2));
 var five = require("johnny-five");
-var board = new five.Board({repl:true});
+
+if (argv.noboard === true) {
+  // Create a fake board
+  var board = {};
+  board.on = function(){};
+  board.isReady = false;
+} else {
+  var board = new five.Board({repl:true});
+}
 
 var servo;
 
@@ -44,7 +52,6 @@ server.listen(port, function() {
 });
 
 board.on("ready", function() {
-  
   leftServo = new five.Servo({
     controller: "PCA9685",
     pin: 0,
