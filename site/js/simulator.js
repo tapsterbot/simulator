@@ -190,14 +190,26 @@ UpperArm = function(args){
                       "x2": points[1][2],
                       "y2": points[1][3]
         })
+        // Now move the other arm
         this.parent.parent.b.forearm.move(points[1][2], points[1][3])
+
+        // Update pointer location
+        this.parent.parent.pointer.attr('cx', forearm.attr('x2'))
+        this.parent.parent.pointer.attr('cy', forearm.attr('y2'))
+
       } else {
+        // Move this arm
         forearm.attr({"x1": result.x,
                       "y1": result.y,
                       "x2": points[1][0],
                       "y2": points[1][1]
         })
+        // Now move the other arm
         this.parent.parent.a.forearm.move(points[1][0], points[1][1])
+
+        // Update pointer location
+        this.parent.parent.pointer.attr('cx', forearm.attr('x2'))
+        this.parent.parent.pointer.attr('cy', forearm.attr('y2'))
       }
     }
   }
@@ -234,7 +246,7 @@ Forearm = function(args) {
     pt.y = posy
     var transformed = pt.matrixTransform(svg.getScreenCTM().inverse())
 
-    this.move(transformed.x, transformed.y)
+    this.parent.parent.pointer.move(transformed.x, transformed.y)
   }
 
   forearm.drag(dragForearmEvent)
