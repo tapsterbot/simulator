@@ -443,6 +443,8 @@ Grid = function(args) {
     this.xAxis.attr({visibility:"hidden"})
     this.yAxis.attr({visibility:"hidden"})
   }
+
+  this.show()
 }
 
 ////////////////////////////
