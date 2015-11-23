@@ -102,7 +102,7 @@ Tap = function(args) {
     parent: this,
     x: this.home.x,
     y: this.home.y,
-    size: 7
+    size: 8
   })
 
   this.a.forearm.move(this.home.x, this.home.y)
