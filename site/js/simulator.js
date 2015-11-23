@@ -447,8 +447,7 @@ Grid = function(args) {
 ////////////////////////////
 // UI Setup
 grid = new Grid()
-grid.show()
-
+device = new Device('iphone')
 tap = new Tap({
   a: {x:-8*4, y:40, upperArmRadius:8*9, forearmRadius:8*13},
   b: {x: 8*4, y:40, upperArmRadius:8*9, forearmRadius:8*13},
