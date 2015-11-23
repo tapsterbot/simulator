@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var argv = require('minimist')(process.argv.slice(2));
 var five = require("johnny-five");
 
-if (argv.noboard === true) {
+if (argv.nodevice === true) {
   // Create a fake board
   var board = {};
   board.on = function(){};
