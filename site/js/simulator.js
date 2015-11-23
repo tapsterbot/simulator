@@ -2,40 +2,34 @@ var socket = io()
 paper = Snap("#svg")
 
 
-nexus5 = {
-  height: 137.9,
-  width: 69.2
+Device = function(deviceName) {
+  devices = {
+    nexus5 : {
+      height: 137.9,
+      width: 69.2
+    },
+    iphone : {
+      height: 200,
+      width: 100
+    },
+    tablet : {
+      height: 266,
+      width: 178
+    },
+    tablet2 : {
+      height: 178,
+      width: 266
+    }
+  }
+  device = devices[deviceName]
+
+  var newDevice = paper.rect(-device.height/2,
+                             -device.width-35,
+                              device.height,
+                              device.width)
+  newDevice.attr({fill: "rgba(0,0,0,0.2)"})
+  return newDevice
 }
-
-iphone = {
-  height: 200,
-  width: 100
-}
-
-tablet = {
-  height: 266,
-  width: 178
-}
-
-tablet2 = {
-  height: 178,
-  width: 266
-}
-
-drawPhone = function(phone) {
-  var rect = paper.rect(-phone.height/2,
-                    -phone.width-35,
-                     phone.height,
-                     phone.width)
-  rect.attr({fill: "rgba(0,0,0,0.2)"})
-  return rect
-}
-
-
-phone = drawPhone(nexus5)
-
-
-////////////////////////////////////////////////
 
 Tap = function(args) {
   this.a = {
