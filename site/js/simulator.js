@@ -178,6 +178,12 @@ UpperArm = function(args){
     }
 
     if (points[0] == 1) {
+
+      // TODO: Find out why intersection() returns NaN points when upperArms touch
+      if (isNaN(points[1][0])) {
+        return
+      }
+
       if (side == "left") {
         forearm.attr({"x1": result.x,
                       "y1": result.y,
