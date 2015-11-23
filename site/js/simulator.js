@@ -364,10 +364,11 @@ Pointer = function(args) {
   pointer.drag(dragPointerEvent)
 
   pointer.move = function(posx, posy) {
+    // TODO: Need to rethink how to implement the concept of limits
     // Floor
-    if (posy > -10) {
-      posy = -10
-    }
+    //if (posy > -10) {
+    //  posy = -10
+    //}
 
     // Ceiling
     //if (transformed.y < -109) {
